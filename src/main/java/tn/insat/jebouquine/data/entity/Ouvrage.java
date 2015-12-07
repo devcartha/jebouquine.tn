@@ -1,7 +1,9 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "ouvrages")
@@ -11,7 +13,7 @@ public class Ouvrage {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String titre;
-	private String ISBN;
+	private String isbn;
 	private String dateParution;
 	private String image;
 	private int quantiteDispo;
@@ -29,10 +31,11 @@ public class Ouvrage {
 	public Ouvrage() {
 	}
 
-	public Ouvrage(String titre, String ISBN, String dateParution, String image, int quantiteDispo, int quantiteVendus, Collection<Chapitre> chapitres, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
+	public Ouvrage(String titre, String ISBN, Date dateParution, String image, int quantiteDispo, int quantiteVendus, Collection<Chapitre> chapitres, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
 		this.titre = titre;
-		this.ISBN = ISBN;
-		this.dateParution = dateParution;
+		this.isbn = ISBN;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        this.dateParution = formater.format(dateParution);
 		this.image = image;
 		this.quantiteDispo = quantiteDispo;
 		this.quantiteVendus = quantiteVendus;
@@ -59,19 +62,20 @@ public class Ouvrage {
 	}
 
 	public String getISBN() {
-		return ISBN;
+		return isbn;
 	}
 
 	public void setISBN(String iSBN) {
-		ISBN = iSBN;
+        isbn = iSBN;
 	}
 
 	public String getDateParution() {
 		return dateParution;
 	}
 
-	public void setDateParution(String dateParution) {
-		this.dateParution = dateParution;
+	public void setDateParution(Date dateParution) {
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+		this.dateParution = formater.format(dateParution);
 	}
 
 	public String getImage() {
@@ -141,7 +145,7 @@ public class Ouvrage {
 		if (quantiteVendus != ouvrage.quantiteVendus) return false;
 		if (id != null ? !id.equals(ouvrage.id) : ouvrage.id != null) return false;
 		if (titre != null ? !titre.equals(ouvrage.titre) : ouvrage.titre != null) return false;
-		if (ISBN != null ? !ISBN.equals(ouvrage.ISBN) : ouvrage.ISBN != null) return false;
+		if (isbn != null ? !isbn.equals(ouvrage.isbn) : ouvrage.isbn != null) return false;
 		if (dateParution != null ? !dateParution.equals(ouvrage.dateParution) : ouvrage.dateParution != null)
 			return false;
 		if (image != null ? !image.equals(ouvrage.image) : ouvrage.image != null) return false;
@@ -156,7 +160,7 @@ public class Ouvrage {
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (titre != null ? titre.hashCode() : 0);
-		result = 31 * result + (ISBN != null ? ISBN.hashCode() : 0);
+		result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
 		result = 31 * result + (dateParution != null ? dateParution.hashCode() : 0);
 		result = 31 * result + (image != null ? image.hashCode() : 0);
 		result = 31 * result + quantiteDispo;
@@ -173,7 +177,7 @@ public class Ouvrage {
 		return "Ouvrage{" +
 				"id=" + id +
 				", titre='" + titre + '\'' +
-				", ISBN='" + ISBN + '\'' +
+				", ISBN='" + isbn + '\'' +
 				", dateParution='" + dateParution + '\'' +
 				", image='" + image + '\'' +
 				", quantiteDispo=" + quantiteDispo +

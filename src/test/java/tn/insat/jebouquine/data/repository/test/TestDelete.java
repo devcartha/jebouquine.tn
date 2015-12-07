@@ -9,6 +9,8 @@ import tn.insat.jebouquine.configuration.JeBouquineApplication;
 import tn.insat.jebouquine.data.entity.Client;
 import tn.insat.jebouquine.data.repository.IClientRepository;
 
+import java.util.Date;
+
 /**
  * Created by Devcartha on 12/7/2015.
  */
@@ -20,8 +22,8 @@ public class TestDelete {
     private IClientRepository clientRepository;
     @Test
     public void testDelete() throws Exception {
-        Client c1 = new Client("Chaouechi","Souhail","09616807","00000000","chaouechi.souhail@gmail.com","Boumhel");
-        clientRepository.save(c1);
-        clientRepository.delete(c1.getId());
+        Client c = new Client("login","password","Chaouechi","Souhail","09616807","00000000",new Date(),"chaouechi.souhail@gmail.com","Boumhel",null);
+        clientRepository.save(c);
+        clientRepository.delete(c.getId());
     }
 }

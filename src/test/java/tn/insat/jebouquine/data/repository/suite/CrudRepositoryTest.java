@@ -10,7 +10,7 @@ import tn.insat.jebouquine.data.repository.test.TestUpdate;
  * Created by Devcartha on 12/7/2015.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestCreate.class,TestRetrieve.class,TestUpdate.class,TestDelete.class})
+@Suite.SuiteClasses({/*TestCreate.class,TestRetrieve.class,TestUpdate.class,TestDelete.class*/})
 public class CrudRepositoryTest {
 
 }

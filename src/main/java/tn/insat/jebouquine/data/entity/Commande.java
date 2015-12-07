@@ -1,6 +1,7 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class Commande {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     private String etat;
-	private Date dateCommande;
+	private String dateCommande;
 	private String modePaiement;
 	private double fraisLivraison;
 	private double total;
@@ -29,7 +30,8 @@ public class Commande {
 
     public Commande(String etat, Date dateCommande, String modePaiement, double fraisLivraison, double total, String adresseLivraison) {
         this.etat = etat;
-        this.dateCommande = dateCommande;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        this.dateCommande = formater.format(dateCommande);
         this.modePaiement = modePaiement;
         this.fraisLivraison = fraisLivraison;
         this.total = total;
@@ -52,12 +54,13 @@ public class Commande {
         this.etat = etat;
     }
 
-    public Date getDateCommande() {
+    public String getDateCommande() {
         return dateCommande;
     }
 
     public void setDateCommande(Date dateCommande) {
-        this.dateCommande = dateCommande;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        this.dateCommande = formater.format(dateCommande);
     }
 
     public String getModePaiement() {

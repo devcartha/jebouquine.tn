@@ -9,6 +9,8 @@ import tn.insat.jebouquine.configuration.JeBouquineApplication;
 import tn.insat.jebouquine.data.entity.Client;
 import tn.insat.jebouquine.data.repository.IClientRepository;
 
+import java.util.Date;
+
 /**
  * Created by Devcartha on 12/7/2015.
  */
@@ -20,7 +22,7 @@ public class TestUpdate {
 
     @Test
     public void testUpdate() throws Exception {
-        Client c1 = new Client("Chaouechi","Souhail","09616807","00000000","chaouechi.souhail@gmail.com","Boumhel");
+        Client c1 = new Client("login","password","Chaouechi","Souhail","09616807","00000000",new Date(),"chaouechi.souhail@gmail.com","Boumhel",null);
         clientRepository.save(c1);
         Client c2 = clientRepository.findOne(c1.getId());
         c2.setAdresse("Ben arous");

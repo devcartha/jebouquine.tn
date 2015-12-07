@@ -1,6 +1,7 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -11,7 +12,7 @@ public class Facture {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String etat;
-    private Date dateFacturation;
+    private String dateFacturation;
 	@OneToOne
 	private Commande commande;
 
@@ -20,7 +21,8 @@ public class Facture {
 
     public Facture(String etat, Date dateFacturation, Commande commande) {
         this.etat = etat;
-        this.dateFacturation = dateFacturation;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        this.dateFacturation = formater.format(dateFacturation);
         this.commande = commande;
     }
 
@@ -40,12 +42,13 @@ public class Facture {
         this.etat = etat;
     }
 
-    public Date getDateFacturation() {
+    public String getDateFacturation() {
         return dateFacturation;
     }
 
     public void setDateFacturation(Date dateFacturation) {
-        this.dateFacturation = dateFacturation;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
+        this.dateFacturation = formater.format(dateFacturation);
     }
 
     public Commande getCommande() {

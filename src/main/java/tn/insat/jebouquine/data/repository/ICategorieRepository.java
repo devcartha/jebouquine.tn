@@ -9,4 +9,5 @@ import tn.insat.jebouquine.data.entity.Categorie;
  */
 @Repository
 public interface ICategorieRepository extends CrudRepository<Categorie,Long> {
+    public Categorie findCategorieByTitre(String titre);
 }

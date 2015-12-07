@@ -10,4 +10,5 @@ import tn.insat.jebouquine.data.entity.Editeur;
  */
 @Repository
 public interface IEditeurRepository extends CrudRepository<Editeur,Long> {
+    public Editeur findEditeurByNom(String nom);
 }
