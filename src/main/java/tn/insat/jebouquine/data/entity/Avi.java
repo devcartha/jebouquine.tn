@@ -8,7 +8,7 @@ public class Avi {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private int note;
 	@ManyToOne
     @JoinColumn(name = "client_id")
@@ -17,11 +17,20 @@ public class Avi {
     @JoinColumn(name = "ouvrage_id")
 	private Ouvrage ouvrage;
 
-	public int getId() {
+    public Avi() {
+    }
+
+    public Avi(int note, Client client, Ouvrage ouvrage) {
+        this.note = note;
+        this.client = client;
+        this.ouvrage = ouvrage;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -63,16 +72,17 @@ public class Avi {
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + note;
-        result = 31 * result + (client != null ? client.hashCode() : 0);
-        result = 31 * result + (ouvrage != null ? ouvrage.hashCode() : 0);
-        return result;
-    }
+	@Override
+	public int hashCode() {
 
-    @Override
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + note;
+		result = 31 * result + (client != null ? client.hashCode() : 0);
+		result = 31 * result + (ouvrage != null ? ouvrage.hashCode() : 0);
+		return result;
+	}
+
+	@Override
     public String toString() {
         return "Avi{" +
                 "id=" + id +

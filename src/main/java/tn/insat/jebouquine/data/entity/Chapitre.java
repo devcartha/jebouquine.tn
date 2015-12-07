@@ -8,17 +8,26 @@ public class Chapitre {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private String nom;
 	private String extrait;
     @ManyToOne
     private Ouvrage ouvrage;
 
-	public int getId() {
+	public Chapitre() {
+	}
+
+	public Chapitre(String nom, String extrait, Ouvrage ouvrage) {
+		this.nom = nom;
+		this.extrait = extrait;
+		this.ouvrage = ouvrage;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -46,24 +55,26 @@ public class Chapitre {
         this.ouvrage = ouvrage;
     }
 
-    @Override
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
 		Chapitre chapitre = (Chapitre) o;
 
-		if (id != chapitre.id) return false;
+		if (id != null ? !id.equals(chapitre.id) : chapitre.id != null) return false;
 		if (nom != null ? !nom.equals(chapitre.nom) : chapitre.nom != null) return false;
-		return !(extrait != null ? !extrait.equals(chapitre.extrait) : chapitre.extrait != null);
+		if (extrait != null ? !extrait.equals(chapitre.extrait) : chapitre.extrait != null) return false;
+		return !(ouvrage != null ? !ouvrage.equals(chapitre.ouvrage) : chapitre.ouvrage != null);
 
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id;
+		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (nom != null ? nom.hashCode() : 0);
 		result = 31 * result + (extrait != null ? extrait.hashCode() : 0);
+		result = 31 * result + (ouvrage != null ? ouvrage.hashCode() : 0);
 		return result;
 	}
 

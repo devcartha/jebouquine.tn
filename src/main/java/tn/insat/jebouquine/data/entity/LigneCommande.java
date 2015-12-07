@@ -16,8 +16,18 @@ public class LigneCommande {
 	private Ouvrage ouvrage;
     @ManyToOne
     private Commande commande;
-	
-	public Long getId() {
+
+    public LigneCommande() {
+    }
+
+    public LigneCommande(double prix, int quantite, Ouvrage ouvrage, Commande commande) {
+        this.prix = prix;
+        this.quantite = quantite;
+        this.ouvrage = ouvrage;
+        this.commande = commande;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

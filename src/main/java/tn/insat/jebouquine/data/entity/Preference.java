@@ -9,7 +9,7 @@ public class Preference {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
     @OneToOne
 	private Client client;
 	@ManyToMany
@@ -19,11 +19,21 @@ public class Preference {
 	@ManyToMany
 	private Collection<Categorie> categories;
 
-	public int getId() {
+    public Preference() {
+    }
+
+    public Preference(Client client, Collection<Editeur> editeurs, Collection<Auteur> auteurs, Collection<Categorie> categories) {
+        this.client = client;
+        this.editeurs = editeurs;
+        this.auteurs = auteurs;
+        this.categories = categories;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -66,7 +76,7 @@ public class Preference {
 
         Preference that = (Preference) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (client != null ? !client.equals(that.client) : that.client != null) return false;
         if (editeurs != null ? !editeurs.equals(that.editeurs) : that.editeurs != null) return false;
         if (auteurs != null ? !auteurs.equals(that.auteurs) : that.auteurs != null) return false;
@@ -76,7 +86,7 @@ public class Preference {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (editeurs != null ? editeurs.hashCode() : 0);
         result = 31 * result + (auteurs != null ? auteurs.hashCode() : 0);

@@ -7,17 +7,27 @@ import javax.persistence.*;
 public class Auteur {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private String nom;
 	private String prenom;
 	private String nationalite;
 	private String email;
 
-	public int getId() {
+    public Auteur() {
+    }
+
+    public Auteur(String nom, String prenom, String nationalite, String email) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.nationalite = nationalite;
+        this.email = email;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -70,7 +80,8 @@ public class Auteur {
 
 	@Override
 	public int hashCode() {
-		int result = id;
+
+		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (nom != null ? nom.hashCode() : 0);
 		result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
 		result = 31 * result + (nationalite != null ? nationalite.hashCode() : 0);

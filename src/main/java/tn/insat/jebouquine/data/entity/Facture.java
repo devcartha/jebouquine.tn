@@ -9,17 +9,26 @@ public class Facture {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private String etat;
     private Date dateFacturation;
 	@OneToOne
 	private Commande commande;
 
-	public int getId() {
+    public Facture() {
+    }
+
+    public Facture(String etat, Date dateFacturation, Commande commande) {
+        this.etat = etat;
+        this.dateFacturation = dateFacturation;
+        this.commande = commande;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -54,7 +63,7 @@ public class Facture {
 
         Facture facture = (Facture) o;
 
-        if (id != facture.id) return false;
+        if (id != null ? !id.equals(facture.id) : facture.id != null) return false;
         if (etat != null ? !etat.equals(facture.etat) : facture.etat != null) return false;
         if (dateFacturation != null ? !dateFacturation.equals(facture.dateFacturation) : facture.dateFacturation != null)
             return false;
@@ -64,7 +73,7 @@ public class Facture {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (etat != null ? etat.hashCode() : 0);
         result = 31 * result + (dateFacturation != null ? dateFacturation.hashCode() : 0);
         result = 31 * result + (commande != null ? commande.hashCode() : 0);

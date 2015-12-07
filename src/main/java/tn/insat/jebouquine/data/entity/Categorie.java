@@ -8,14 +8,21 @@ public class Categorie {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private String titre;
 
-	public int getId() {
+	public Categorie() {
+	}
+
+	public Categorie(String titre) {
+		this.titre = titre;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -41,7 +48,7 @@ public class Categorie {
 
 	@Override
 	public int hashCode() {
-		int result = id;
+		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (titre != null ? titre.hashCode() : 0);
 		return result;
 	}

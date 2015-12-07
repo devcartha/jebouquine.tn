@@ -9,7 +9,7 @@ import java.util.Date;
 public class Commande {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
     private String etat;
 	private Date dateCommande;
 	private String modePaiement;
@@ -24,11 +24,23 @@ public class Commande {
 	@OneToOne(mappedBy = "commande")
 	private Facture facture;
 
-    public int getId() {
+    public Commande() {
+    }
+
+    public Commande(String etat, Date dateCommande, String modePaiement, double fraisLivraison, double total, String adresseLivraison) {
+        this.etat = etat;
+        this.dateCommande = dateCommande;
+        this.modePaiement = modePaiement;
+        this.fraisLivraison = fraisLivraison;
+        this.total = total;
+        this.adresseLivraison = adresseLivraison;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -132,7 +144,7 @@ public class Commande {
     public int hashCode() {
         int result;
         long temp;
-        result = id;
+        result = id != null ? id.hashCode() : 0;
         result = 31 * result + (etat != null ? etat.hashCode() : 0);
         result = 31 * result + (dateCommande != null ? dateCommande.hashCode() : 0);
         result = 31 * result + (modePaiement != null ? modePaiement.hashCode() : 0);

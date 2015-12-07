@@ -8,7 +8,7 @@ public class Client {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	private String nom;
 	private String prenom;
 	private String cin;
@@ -18,12 +18,23 @@ public class Client {
 	@OneToOne(mappedBy = "client")
 	private Preference preference;
 
+	public Client() {
+	}
 
-	public int getId() {
+	public Client(String nom, String prenom, String cin, String numeroPasseport, String email, String adresse) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.cin = cin;
+		this.numeroPasseport = numeroPasseport;
+		this.email = email;
+		this.adresse = adresse;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -103,18 +114,18 @@ public class Client {
 
 	}
 
-	@Override
-	public int hashCode() {
-		int result = id;
-		result = 31 * result + (nom != null ? nom.hashCode() : 0);
-		result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-		result = 31 * result + (cin != null ? cin.hashCode() : 0);
-		result = 31 * result + (numeroPasseport != null ? numeroPasseport.hashCode() : 0);
-		result = 31 * result + (email != null ? email.hashCode() : 0);
-		result = 31 * result + (adresse != null ? adresse.hashCode() : 0);
-		result = 31 * result + (preference != null ? preference.hashCode() : 0);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nom != null ? nom.hashCode() : 0);
+        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
+        result = 31 * result + (cin != null ? cin.hashCode() : 0);
+        result = 31 * result + (numeroPasseport != null ? numeroPasseport.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (adresse != null ? adresse.hashCode() : 0);
+        result = 31 * result + (preference != null ? preference.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package tn.insat;
+package tn.insat.jebouquine;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
