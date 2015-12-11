@@ -1,6 +1,7 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,9 +12,10 @@ public class Client {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+    @Size(min=5, max=20)
     private String login;
     private String password;
-    private String dateInscription;
+    private Date dateInscription;
 	private String nom;
 	private String prenom;
 	private String cin;
@@ -34,7 +36,7 @@ public class Client {
         this.cin = cin;
         this.numeroPasseport = numeroPasseport;
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
-        this.dateInscription = formater.format(dateInscription);
+        this.dateInscription = /*formater.format(*/dateInscription/*)*/;
         this.email = email;
         this.adresse = adresse;
         this.preference = preference;
@@ -96,13 +98,13 @@ public class Client {
         this.numeroPasseport = numeroPasseport;
     }
 
-    public String getDateInscription() {
+    public Date getDateInscription() {
         return dateInscription;
     }
 
     public void setDateInscription(Date dateInscription) {
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
-        this.dateInscription = formater.format(dateInscription);
+        this.dateInscription = /*formater.format(*/dateInscription/*)*/;
     }
 
     public String getEmail() {

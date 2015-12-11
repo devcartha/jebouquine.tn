@@ -22,11 +22,17 @@ import java.util.HashMap;
 @Controller
 public class OuvrageController {
 
-    @Autowired
-    private IOuvrageRepository ouvrageRepository;
 
     @Autowired
     IGestionOuvrage gestionOuvrage;
+
+    @RequestMapping(value = "/listeOuvrages", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView listeOuvrages(){
+        ModelAndView mv = new ModelAndView("ouvrage/listOuvrages");
+        mv.addObject("listOuvrages",gestionOuvrage.getAll());
+        return mv;
+    }
 
     @RequestMapping(value = "/ouvrageForm", method = RequestMethod.GET)
     @ResponseBody

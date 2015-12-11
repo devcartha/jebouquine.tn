@@ -19,6 +19,7 @@
                     <label for="titre">Titre</label>
                     <input type="text" class="form-control" id="titre" placeholder="Entrez le titre de l'ouvrage"
                            th:field="*{titre}"/>
+                    <p th:if="${#fields.hasErrors('titre')}" th:errors="*{titre}"></p>
                 </div>
 
                 <div class="form-group">
