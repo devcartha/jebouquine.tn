@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.css}"/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 text-center" th:each="ouvrage : ${listOuvrages}">
+            <div class="thumbnail"><img src="http://lorempixel.com/300/200/" style="margin-bottom:10px"/>
+                <p th:text="${ouvrage.titre}"></p>
+                <button type="button" class="btn btn-primary">Ajouter au panier</button>
+                <button type="button" class="btn btn-primary">Details</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.2.min.js" th:href="@{js/jquery-1.11.2.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.js" th:href="@{js/bootstrap.js}"></script>
+</body>
+</html>
