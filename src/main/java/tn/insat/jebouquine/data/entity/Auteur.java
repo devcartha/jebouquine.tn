@@ -9,16 +9,14 @@ public class Auteur {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nom;
-	private String prenom;
 	private String nationalite;
 	private String email;
 
     public Auteur() {
     }
 
-    public Auteur(String nom, String prenom, String nationalite, String email) {
+    public Auteur(String nom, String nationalite, String email) {
         this.nom = nom;
-        this.prenom = prenom;
         this.nationalite = nationalite;
         this.email = email;
     }
@@ -37,14 +35,6 @@ public class Auteur {
 
 	public void setNom(String nom) {
 		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
 	}
 
 	public String getNationalite() {
@@ -72,7 +62,6 @@ public class Auteur {
 
 		if (id != auteur.id) return false;
 		if (nom != null ? !nom.equals(auteur.nom) : auteur.nom != null) return false;
-		if (prenom != null ? !prenom.equals(auteur.prenom) : auteur.prenom != null) return false;
 		if (nationalite != null ? !nationalite.equals(auteur.nationalite) : auteur.nationalite != null) return false;
 		return !(email != null ? !email.equals(auteur.email) : auteur.email != null);
 
@@ -83,7 +72,6 @@ public class Auteur {
 
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (nom != null ? nom.hashCode() : 0);
-		result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
 		result = 31 * result + (nationalite != null ? nationalite.hashCode() : 0);
 		result = 31 * result + (email != null ? email.hashCode() : 0);
 		return result;
@@ -94,7 +82,6 @@ public class Auteur {
 		return "Auteur{" +
 				"id=" + id +
 				", nom='" + nom + '\'' +
-				", prenom='" + prenom + '\'' +
 				", nationalite='" + nationalite + '\'' +
 				", email='" + email + '\'' +
 				'}';

@@ -13,7 +13,6 @@ import java.util.Collection;
  */
 @Repository
 public interface IAuteurRepository extends CrudRepository<Auteur,Long> {
-    public Collection<Auteur> findAuteurByNomOrPrenom(String nom, String prenom);
-    public Collection<Auteur> findAuteurByNomAndPrenom(String nom, String prenom);
+    public Collection<Auteur> findAuteurByNom(String nom);
     public Collection<Auteur> findAuteurByNationalite(String nationalite);
 }

@@ -1,9 +1,8 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Table(name = "ouvrages")
@@ -15,126 +14,138 @@ public class Ouvrage {
 	private String titre;
 	private String isbn;
 	private String dateParution;
+	//url image
 	private String image;
+	//url fichier pdf
+	private String tableDeMatiere;
 	private int quantiteDispo;
 	private int quantiteVendus;
-	@OneToMany(mappedBy = "ouvrage")
-	private Collection<Chapitre> chapitres;
-	@ManyToMany
+
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Categorie> categories;
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Auteur> auteurs;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "editeur_id")
 	private Editeur editeur;
 
 	public Ouvrage() {
 	}
 
-	public Ouvrage(String titre, String ISBN, Date dateParution, String image, int quantiteDispo, int quantiteVendus, Collection<Chapitre> chapitres, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
-		this.titre = titre;
-		this.isbn = ISBN;
-        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
-        this.dateParution = formater.format(dateParution);
-		this.image = image;
-		this.quantiteDispo = quantiteDispo;
-		this.quantiteVendus = quantiteVendus;
-		this.chapitres = chapitres;
-		this.categories = categories;
-		this.auteurs = auteurs;
-		this.editeur = editeur;
-	}
+    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus) {
+        this.titre = titre;
+        this.isbn = isbn;
+        this.dateParution = dateParution;
+        this.image = image;
+        this.tableDeMatiere = tableDeMatiere;
+        this.quantiteDispo = quantiteDispo;
+        this.quantiteVendus = quantiteVendus;
+        this.categories = new ArrayList<>();
+        this.auteurs = new ArrayList<>();
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
+        this.titre = titre;
+        this.isbn = isbn;
+        this.dateParution = dateParution;
+        this.image = image;
+        this.tableDeMatiere = tableDeMatiere;
+        this.quantiteDispo = quantiteDispo;
+        this.quantiteVendus = quantiteVendus;
+        this.categories = categories;
+        this.auteurs = auteurs;
+        this.editeur = editeur;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getTitre() {
-		return titre;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}
+    public String getTitre() {
+        return titre;
+    }
 
-	public String getISBN() {
-		return isbn;
-	}
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
-	public void setISBN(String iSBN) {
-        isbn = iSBN;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public String getDateParution() {
-		return dateParution;
-	}
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-	public void setDateParution(Date dateParution) {
-        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
-		this.dateParution = formater.format(dateParution);
-	}
+    public String getDateParution() {
+        return dateParution;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public void setDateParution(String dateParution) {
+        this.dateParution = dateParution;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public int getQuantiteDispo() {
-		return quantiteDispo;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public void setQuantiteDispo(int quantiteDispo) {
-		this.quantiteDispo = quantiteDispo;
-	}
+    public String getTableDeMatiere() {
+        return tableDeMatiere;
+    }
 
-	public int getQuantiteVendus() {
-		return quantiteVendus;
-	}
+    public void setTableDeMatiere(String tableDeMatiere) {
+        this.tableDeMatiere = tableDeMatiere;
+    }
 
-	public void setQuantiteVendus(int quantiteVendus) {
-		this.quantiteVendus = quantiteVendus;
-	}
+    public int getQuantiteDispo() {
+        return quantiteDispo;
+    }
 
-	public Collection<Chapitre> getChapitres() {
-		return chapitres;
-	}
+    public void setQuantiteDispo(int quantiteDispo) {
+        this.quantiteDispo = quantiteDispo;
+    }
 
-	public void setChapitres(Collection<Chapitre> chapitres) {
-		this.chapitres = chapitres;
-	}
+    public int getQuantiteVendus() {
+        return quantiteVendus;
+    }
 
-	public Collection<Categorie> getCategories() {
-		return categories;
-	}
+    public void setQuantiteVendus(int quantiteVendus) {
+        this.quantiteVendus = quantiteVendus;
+    }
 
-	public void setCategories(Collection<Categorie> categories) {
-		this.categories = categories;
-	}
+    public Collection<Categorie> getCategories() {
+        return categories;
+    }
 
-	public Collection<Auteur> getAuteurs() {
-		return auteurs;
-	}
+    public void setCategories(Collection<Categorie> categories) {
+        this.categories = categories;
+    }
 
-	public void setAuteurs(Collection<Auteur> auteurs) {
-		this.auteurs = auteurs;
-	}
+    public Collection<Auteur> getAuteurs() {
+        return auteurs;
+    }
 
-	public Editeur getEditeur() {
-		return editeur;
-	}
+    public void setAuteurs(Collection<Auteur> auteurs) {
+        this.auteurs = auteurs;
+    }
 
-	public void setEditeur(Editeur editeur) {
-		this.editeur = editeur;
-	}
+    public Editeur getEditeur() {
+        return editeur;
+    }
 
-	@Override
+    public void setEditeur(Editeur editeur) {
+        this.editeur = editeur;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -149,7 +160,6 @@ public class Ouvrage {
 		if (dateParution != null ? !dateParution.equals(ouvrage.dateParution) : ouvrage.dateParution != null)
 			return false;
 		if (image != null ? !image.equals(ouvrage.image) : ouvrage.image != null) return false;
-		if (chapitres != null ? !chapitres.equals(ouvrage.chapitres) : ouvrage.chapitres != null) return false;
 		if (categories != null ? !categories.equals(ouvrage.categories) : ouvrage.categories != null) return false;
 		if (auteurs != null ? !auteurs.equals(ouvrage.auteurs) : ouvrage.auteurs != null) return false;
 		return !(editeur != null ? !editeur.equals(ouvrage.editeur) : ouvrage.editeur != null);
@@ -165,7 +175,6 @@ public class Ouvrage {
 		result = 31 * result + (image != null ? image.hashCode() : 0);
 		result = 31 * result + quantiteDispo;
 		result = 31 * result + quantiteVendus;
-		result = 31 * result + (chapitres != null ? chapitres.hashCode() : 0);
 		result = 31 * result + (categories != null ? categories.hashCode() : 0);
 		result = 31 * result + (auteurs != null ? auteurs.hashCode() : 0);
 		result = 31 * result + (editeur != null ? editeur.hashCode() : 0);
@@ -182,7 +191,6 @@ public class Ouvrage {
 				", image='" + image + '\'' +
 				", quantiteDispo=" + quantiteDispo +
 				", quantiteVendus=" + quantiteVendus +
-				", chapitres=" + chapitres +
 				", categories=" + categories +
 				", auteurs=" + auteurs +
 				", editeur=" + editeur +

@@ -33,5 +33,12 @@ public class Editeur {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Editeur{" +
+				"id=" + id +
+				", nom='" + nom + '\'' +
+				'}';
+	}
 }
