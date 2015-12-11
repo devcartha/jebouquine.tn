@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Auteur;
 import tn.insat.jebouquine.data.entity.Editeur;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Created by Devcartha on 12/7/2015.
  */

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Avi;
 import tn.insat.jebouquine.data.entity.Client;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Collection;
  */
 @Repository
 public interface IAviRepository extends CrudRepository<Avi,Long> {
-    public Collection<Avi> findAviByClient(Client c);
-    public Collection<Avi> findAviByOuvrage(Client c);
-    public Collection<Avi> findAviByNote(int note);
+    public ArrayList<Avi> findAviByClient(Client c);
+    public ArrayList<Avi> findAviByOuvrage(Client c);
+    public ArrayList<Avi> findAviByNote(int note);
 }

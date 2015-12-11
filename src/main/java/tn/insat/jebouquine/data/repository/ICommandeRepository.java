@@ -6,6 +6,7 @@ import tn.insat.jebouquine.data.entity.Client;
 import tn.insat.jebouquine.data.entity.Commande;
 import tn.insat.jebouquine.data.entity.Ouvrage;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -13,8 +14,8 @@ import java.util.Collection;
  */
 @Repository
 public interface ICommandeRepository extends CrudRepository<Commande,Long> {
-    public Collection<Commande> findCommandeByClient(Client c);
-    public Collection<Commande> findCommandeByEtat(String etat);
-    public Collection<Commande> findCommandeByDateCommande(String dateCommande);
-    public Collection<Commande> findCommandeByLignesCommandeOuvrage(Ouvrage o);
+    public ArrayList<Commande> findCommandeByClient(Client c);
+    public ArrayList<Commande> findCommandeByEtat(String etat);
+    public ArrayList<Commande> findCommandeByDateCommande(String dateCommande);
+    public ArrayList<Commande> findCommandeByLignesCommandeOuvrage(Ouvrage o);
 }

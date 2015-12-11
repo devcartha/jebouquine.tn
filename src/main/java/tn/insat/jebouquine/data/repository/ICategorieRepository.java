@@ -4,6 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Categorie;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Created by Devcartha on 12/7/2015.
  */

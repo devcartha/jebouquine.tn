@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Auteur;
 import tn.insat.jebouquine.data.entity.Ouvrage;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -13,6 +14,6 @@ import java.util.Collection;
  */
 @Repository
 public interface IAuteurRepository extends CrudRepository<Auteur,Long> {
-    public Collection<Auteur> findAuteurByNom(String nom);
-    public Collection<Auteur> findAuteurByNationalite(String nationalite);
+    public Auteur findAuteurByNom(String nom);
+    public ArrayList<Auteur> findAuteurByNationalite(String nationalite);
 }

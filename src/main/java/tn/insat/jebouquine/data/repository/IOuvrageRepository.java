@@ -6,6 +6,7 @@ import tn.insat.jebouquine.data.entity.Auteur;
 import tn.insat.jebouquine.data.entity.Categorie;
 import tn.insat.jebouquine.data.entity.Ouvrage;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -15,10 +16,10 @@ import java.util.Date;
 @Repository
 public interface IOuvrageRepository extends CrudRepository<Ouvrage,Long> {
     public Ouvrage findOuvrageByIsbn(String ISBN);
-    public Collection<Ouvrage> findOuvrageByDateParution(String date);
-    public Collection<Ouvrage> findOuvrageByEditeurNom(String nom);
-    public Collection<Ouvrage> findOuvrageByCategoriesTitre(String titre);
-    public Collection<Ouvrage> findOuvrageByAuteursNom(String nom);
-    public Collection<Ouvrage> findOuvrageByAuteursNationalite(String nationalite);
-    public Collection<Ouvrage> findOuvrageByDateParutionContainingOrEditeurNomContainingOrCategoriesTitreContainingOrAuteursNomContainingOrAuteursNationaliteContaining(String date,String nomEditeur,String titreCategorie,String nomAuteur,String prenomAuteur,String nationaliteAuteur);
+    public ArrayList<Ouvrage> findOuvrageByDateParution(String date);
+    public ArrayList<Ouvrage> findOuvrageByEditeurNom(String nom);
+    public ArrayList<Ouvrage> findOuvrageByCategoriesTitre(String titre);
+    public ArrayList<Ouvrage> findOuvrageByAuteursNom(String nom);
+    public ArrayList<Ouvrage> findOuvrageByAuteursNationalite(String nationalite);
+    public ArrayList<Ouvrage> findOuvrageByDateParutionContainingOrEditeurNomContainingOrCategoriesTitreContainingOrAuteursNomContainingOrAuteursNationaliteContaining(String date,String nomEditeur,String titreCategorie,String nomAuteur,String prenomAuteur,String nationaliteAuteur);
 }

@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Client;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -12,9 +13,9 @@ import java.util.Collection;
 @Repository
 public interface IClientRepository extends CrudRepository<Client,Long> {
     public Client findClientByLoginAndPassword(String login,String password);
-    public Collection<Client> findClientByNomAndPrenom(String nom, String prenom);
-    public Collection<Client> findClientByNomOrPrenom(String nom,String prenom);
+    public ArrayList<Client> findClientByNomAndPrenom(String nom, String prenom);
+    public ArrayList<Client> findClientByNomOrPrenom(String nom, String prenom);
     public Client findClientByCin(String cin);
     public Client findClientByNumeroPasseport(String cin);
-    public Collection<Client> findClientByDateInscription(String dateInscription);
+    public ArrayList<Client> findClientByDateInscription(String dateInscription);
 }

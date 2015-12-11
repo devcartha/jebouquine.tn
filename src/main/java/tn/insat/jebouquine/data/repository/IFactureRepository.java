@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import tn.insat.jebouquine.data.entity.Auteur;
 import tn.insat.jebouquine.data.entity.Facture;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -12,6 +13,6 @@ import java.util.Collection;
  */
 @Repository
 public interface IFactureRepository extends CrudRepository<Facture,Long> {
-    public Collection<Facture> findFactureByEtat(String etat);
-    public Collection<Facture> findFactureByDateFacturation(String dateFacturation);
+    public ArrayList<Facture> findFactureByEtat(String etat);
+    public ArrayList<Facture> findFactureByDateFacturation(String dateFacturation);
 }
