@@ -1,12 +1,19 @@
 package tn.insat.jebouquine.data.entity;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Table(name = "ouvrages")
-public class Ouvrage {
+public class Ouvrage implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,8 +22,10 @@ public class Ouvrage {
 	private String isbn;
 	private String dateParution;
 	//url image
+    @Lob
 	private String image;
 	//url fichier pdf
+    @Lob
 	private String tableDeMatiere;
 	private int quantiteDispo;
 	private int quantiteVendus;
@@ -44,7 +53,7 @@ public class Ouvrage {
         this.auteurs = new ArrayList<>();
     }
 
-    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
+    public Ouvrage(String titre, String isbn, String dateParution,String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, Collection<Categorie> categories, Collection<Auteur> auteurs, Editeur editeur) {
         this.titre = titre;
         this.isbn = isbn;
         this.dateParution = dateParution;
@@ -89,7 +98,7 @@ public class Ouvrage {
         this.dateParution = dateParution;
     }
 
-    public String getImage() {
+    public String  getImage() {
         return image;
     }
 
@@ -196,4 +205,28 @@ public class Ouvrage {
 				", editeur=" + editeur +
 				'}';
 	}
+    public String getAuteursAsText(){
+        String auteursText = "";
+        if (auteurs != null){
+            for (Auteur a : auteurs)
+                auteursText += a.getNom() + ",";
+            auteursText = auteursText.substring(0, auteursText.lastIndexOf(","));
+        }
+        return auteursText;
+    }
+    public String getCategoriesAsText(){
+        String categoriesText = "";
+        if (categories != null) {
+            for (Categorie c : categories)
+                categoriesText += c.getTitre() + ",";
+            categoriesText = categoriesText.substring(0, categoriesText.lastIndexOf(","));
+        }
+        return categoriesText;
+    }
+    public String getEditeurAsText(){
+        String editeurText = "";
+        if (editeur != null)
+            editeurText = editeur.getNom();
+        return editeurText;
+    }
 }

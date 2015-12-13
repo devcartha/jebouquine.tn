@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-default navbar-inverse">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -33,19 +32,52 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 text-center" th:each="ouvrage : ${ouvrages}">
-            <div class="thumbnail"><img th:src="${ouvrage.image}" style="margin-bottom:10px"/>
-                <p th:text="${ouvrage.titre}"></p>
-                <a href="#" ><button class="btn btn-info">+</button></a>
-                <a th:href="@{/ouvrage/details(id=${ouvrage.id})}"><button class="btn btn-info">Details</button></a>
+
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-1 text-center">
+        <div class="thumbnail">
+            <legend th:text="${ouvrage.titre}"></legend>
+            <img th:src="${ouvrage.image}" style="margin-bottom:10px"/>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <label for="isbn">ISBN : </label>
+            <pre id="isbn" th:text="${ouvrage.isbn}"></pre>
+            <label for="quantiteDisponible">Quanitité disponible : </label>
+            <pre id="quantiteDisponible" th:text="${ouvrage.quantiteDispo}"> </pre>
+            <label for="quantiteVendu">Quantité vendu : </label>
+            <pre id="quantiteVendu" th:text="${ouvrage.quantiteVendus}"> </pre>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <label for="editeur">Editeur : </label>
+            <pre id="editeur" th:text="${ouvrage.getEditeurAsText()}"></pre>
+            <label for="auteur">Auteur(s) : </label>
+            <pre id="auteur" th:text="${ouvrage.getAuteursAsText()}"> </pre>
+            <label for="theme">Theme(s) : </label>
+            <pre id="theme" th:text="${ouvrage.getCategoriesAsText()}"> </pre>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="thumbnail">
+            <legend class="text-center">Table de matières</legend>
+            <pre th:text="${ouvrage.tableDeMatiere}"></pre>
+        </div>
+    </div>
+    <div class="col-lg-10 col-lg-offset-1">
+        <legend class=" text-center">Avis des Utilisateurs</legend>
+        <div class="col-sm-3" th:each="avi : ${avis}">
+            <div class="thumbnail">
+                <label for="avi" th:text="${avi.client.nom}"></label>
+                <pre id="avi" th:text="${avi.avi}"></pre>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <hr/>
 <footer class="text-center">
@@ -58,8 +90,8 @@
     </div>
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>
+<script src="js/jquery-1.11.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

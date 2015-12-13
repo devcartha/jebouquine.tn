@@ -1,8 +1,10 @@
 package tn.insat.jebouquine.presentation.controller;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,7 @@ import tn.insat.jebouquine.presentation.validator.OuvrageValidator;
 
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +34,43 @@ public class OuvrageMAContoller {
     @InitBinder
     public void dataBinding(WebDataBinder binder) {
         binder.setValidator(validator);
+        binder.registerCustomEditor(String.class, "image", new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                System.out.println(text);
+                try {
+                    File file = new File("C:\\Users\\Devcartha\\Pictures\\"+text);
+                    int length = (int) file.length();
+                    BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+                    byte[] bytes = new byte[length];
+                    reader.read(bytes, 0, length);
+                    reader.close();
+                    byte[] encoded = Base64.encodeBase64(bytes);
+                    String encodedImage ="data:image/jpeg;base64,"+new String(encoded);
+                    setValue(encodedImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        binder.registerCustomEditor(String.class, "tableDeMatiere", new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                System.out.println(text);
+                try {
+                    File file = new File("C:\\Users\\Devcartha\\Documents\\"+text);
+                    String tableDeMatiere="";
+                    FileReader fr = new FileReader(file);
+                    BufferedReader br = new BufferedReader(fr);
+                    String ligne="";
+                    while((ligne=br.readLine())!=null)
+                        tableDeMatiere+=ligne+"\n";
+                    setValue(tableDeMatiere);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         binder.registerCustomEditor(ArrayList.class, "auteurs", new PropertyEditorSupport() {
             @Override
             public void setAsText(String text) {
@@ -48,8 +88,8 @@ public class OuvrageMAContoller {
             public String getAsText() {
                 String auteurs = "";
                 if ((ArrayList<Auteur>) getValue() != null) {
-                    for (Auteur c : (ArrayList<Auteur>) getValue())
-                        auteurs += c.getNom() + ",";
+                    for (Auteur a : (ArrayList<Auteur>) getValue())
+                        auteurs += a.getNom() + ",";
                     auteurs = auteurs.substring(0, auteurs.lastIndexOf(","));
                 }
                 return auteurs;
@@ -105,10 +145,10 @@ public class OuvrageMAContoller {
     }
 
     @RequestMapping(value = "/ouvrage/save", method = RequestMethod.POST)
-    public ModelAndView addOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult) {
+    public ModelAndView addOuvrage(@ModelAttribute @Validated Ouvrage ouvrage, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("ouvrage/ouvrageForm");
-        }else{
+        } else {
             this.gestionOuvrage.addOuvrage(ouvrage);
             return new ModelAndView("redirect:/ouvrage/list");
         }
@@ -118,7 +158,17 @@ public class OuvrageMAContoller {
     @ResponseBody
     public ModelAndView getOuvragesList() {
         ModelAndView mv = new ModelAndView("ouvrage/ouvrageList");
-        mv.addObject("ouvrages",gestionOuvrage.getAll());
+        mv.addObject("ouvrages", gestionOuvrage.getAll());
+        return mv;
+    }
+
+    @RequestMapping(value = "/ouvrage/details", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getOuvrageDetails(@RequestParam Long id) {
+        ModelAndView mv = new ModelAndView("ouvrage/ouvrageDetails");
+        Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
+        mv.addObject("ouvrage",ouvrage);
+        mv.addObject("avis",gestionOuvrage.getAvisClients(ouvrage));
         return mv;
     }
 

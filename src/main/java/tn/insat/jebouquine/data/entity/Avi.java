@@ -9,7 +9,7 @@ public class Avi {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private int note;
+	private String avi;
 	@ManyToOne
     @JoinColumn(name = "client_id")
 	private Client client;
@@ -20,8 +20,8 @@ public class Avi {
     public Avi() {
     }
 
-    public Avi(int note, Client client, Ouvrage ouvrage) {
-        this.note = note;
+    public Avi(String avi, Client client, Ouvrage ouvrage) {
+        this.avi = avi;
         this.client = client;
         this.ouvrage = ouvrage;
     }
@@ -34,12 +34,12 @@ public class Avi {
 		this.id = id;
 	}
 
-	public int getNote() {
-		return note;
+	public String getAvi() {
+		return avi;
 	}
 
-	public void setNote(int note) {
-		this.note = note;
+	public void setAvi(String avi) {
+		this.avi = avi;
 	}
 
 	public Client getClient() {
@@ -58,37 +58,37 @@ public class Avi {
 		this.ouvrage = ouvrage;
 	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        Avi avi = (Avi) o;
+		Avi avi1 = (Avi) o;
 
-        if (id != avi.id) return false;
-        if (note != avi.note) return false;
-        if (client != null ? !client.equals(avi.client) : avi.client != null) return false;
-        return !(ouvrage != null ? !ouvrage.equals(avi.ouvrage) : avi.ouvrage != null);
+		if (id != null ? !id.equals(avi1.id) : avi1.id != null) return false;
+		if (avi != null ? !avi.equals(avi1.avi) : avi1.avi != null) return false;
+		if (client != null ? !client.equals(avi1.client) : avi1.client != null) return false;
+		return !(ouvrage != null ? !ouvrage.equals(avi1.ouvrage) : avi1.ouvrage != null);
 
-    }
+	}
 
 	@Override
 	public int hashCode() {
-
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + note;
+		result = 31 * result + (avi != null ? avi.hashCode() : 0);
 		result = 31 * result + (client != null ? client.hashCode() : 0);
 		result = 31 * result + (ouvrage != null ? ouvrage.hashCode() : 0);
 		return result;
 	}
 
 	@Override
-    public String toString() {
-        return "Avi{" +
-                "id=" + id +
-                ", note=" + note +
-                ", client=" + client +
-                ", ouvrage=" + ouvrage +
-                '}';
-    }
+	public String toString() {
+		return "Avi{" +
+				"id=" + id +
+				", avi='" + avi + '\'' +
+				", client=" + client +
+				", ouvrage=" + ouvrage +
+				'}';
+	}
 }
+

@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tn.insat.jebouquine.business.facade.IGestionOuvrage;
-import tn.insat.jebouquine.data.entity.Auteur;
-import tn.insat.jebouquine.data.entity.Categorie;
-import tn.insat.jebouquine.data.entity.Editeur;
-import tn.insat.jebouquine.data.entity.Ouvrage;
-import tn.insat.jebouquine.data.repository.IAuteurRepository;
-import tn.insat.jebouquine.data.repository.ICategorieRepository;
-import tn.insat.jebouquine.data.repository.IEditeurRepository;
-import tn.insat.jebouquine.data.repository.IOuvrageRepository;
+import tn.insat.jebouquine.data.entity.*;
+import tn.insat.jebouquine.data.repository.*;
+
 import java.util.ArrayList;
 
 /**
@@ -30,6 +25,8 @@ public class GestionOuvrage implements IGestionOuvrage {
     private ICategorieRepository categorieRepository;
     @Autowired
     private IEditeurRepository editeurRepository;
+    @Autowired
+    private IAviRepository aviRepository;
 
     public void addOuvrage(Ouvrage ouvrage) {
 
@@ -52,8 +49,16 @@ public class GestionOuvrage implements IGestionOuvrage {
         ouvrage.setEditeur(e);
         ouvrage.setCategories(categories);
         ouvrage.setAuteurs(auteurs);
-
         this.ouvrageRepository.save(ouvrage);
+    }
+
+    public Ouvrage getOuvrageById(Long id){
+        return ouvrageRepository.findOne(id);
+    }
+
+    @Override
+    public ArrayList<Avi> getAvisClients(Ouvrage ouvrage) {
+        return aviRepository.findAviByOuvrage(ouvrage);
     }
 
     public ArrayList<Ouvrage> getAll(){
