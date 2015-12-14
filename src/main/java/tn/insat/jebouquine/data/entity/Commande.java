@@ -2,8 +2,10 @@ package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "commandes")
@@ -21,7 +23,7 @@ public class Commande {
     @JoinColumn(name = "client_id")
 	private Client client;
 	@OneToMany(mappedBy = "commande")
-	private Collection<LigneCommande> lignesCommande;
+	private List<LigneCommande> lignesCommande;
 	@OneToOne(mappedBy = "commande")
 	private Facture facture;
 
@@ -103,11 +105,11 @@ public class Commande {
         this.client = client;
     }
 
-    public Collection<LigneCommande> getLignesCommande() {
+    public List<LigneCommande> getLignesCommande() {
         return lignesCommande;
     }
 
-    public void setLignesCommande(Collection<LigneCommande> lignesCommande) {
+    public void setLignesCommande(List<LigneCommande> lignesCommande) {
         this.lignesCommande = lignesCommande;
     }
 

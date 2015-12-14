@@ -23,7 +23,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Livre</a></li>
+                <li><a th:href="@{ouvrage/list}">Livre</a></li>
                 <li><a href="#">Auteur</a></li>
                 <li><a href="#">Editeur</a></li>
                 <li><a href="#">Theme</a></li>
@@ -36,10 +36,11 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-3 text-center" th:each="ouvrage : ${ouvrages}">
-            <div class="thumbnail"><img th:src="${ouvrage.image}" style="margin-bottom:10px"/>
+            <div class="thumbnail"><img th:src="${ouvrage.getImageAsText()}" style="margin-bottom:10px"/>
                 <p th:text="${ouvrage.titre}"></p>
                 <a href="#" ><button class="btn btn-info">+</button></a>
                 <a th:href="@{/ouvrage/details(id=${ouvrage.id})}"><button class="btn btn-info">Details</button></a>
+                <a th:href="@{/ouvrage/formU(id=${ouvrage.id})}"><button class="btn btn-info">Modifier</button></a>
             </div>
         </div>
     </div>

@@ -1,6 +1,8 @@
 package tn.insat.jebouquine.data.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class Panier {
@@ -8,7 +10,7 @@ public class Panier {
 	private Long id;
 	private double total;
 	private Client client;
-	private Collection<LigneCommande> lignesCommande;
+	private List<LigneCommande> lignesCommande;
 	
 	public Long getId() {
 		return id;
@@ -28,10 +30,10 @@ public class Panier {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	public Collection<LigneCommande> getLignesCommande() {
+	public List<LigneCommande> getLignesCommande() {
 		return lignesCommande;
 	}
-	public void setLignesCommande(Collection<LigneCommande> lignesCommande) {
+	public void setLignesCommande(List<LigneCommande> lignesCommande) {
 		this.lignesCommande = lignesCommande;
 	}
 

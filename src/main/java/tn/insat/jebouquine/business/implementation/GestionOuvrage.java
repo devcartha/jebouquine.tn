@@ -56,7 +56,6 @@ public class GestionOuvrage implements IGestionOuvrage {
         return ouvrageRepository.findOne(id);
     }
 
-    @Override
     public ArrayList<Avi> getAvisClients(Ouvrage ouvrage) {
         return aviRepository.findAviByOuvrage(ouvrage);
     }

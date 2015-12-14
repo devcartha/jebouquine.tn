@@ -1,7 +1,9 @@
 package tn.insat.jebouquine.data.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "preferences")
@@ -13,16 +15,16 @@ public class Preference {
     @OneToOne
 	private Client client;
 	@ManyToMany
-	private Collection<Editeur> editeurs;
+	private List<Editeur> editeurs;
 	@ManyToMany
-	private Collection<Auteur> auteurs;
+	private List<Auteur> auteurs;
 	@ManyToMany
-	private Collection<Categorie> categories;
+	private List<Categorie> categories;
 
     public Preference() {
     }
 
-    public Preference(Client client, Collection<Editeur> editeurs, Collection<Auteur> auteurs, Collection<Categorie> categories) {
+    public Preference(Client client, List<Editeur> editeurs, List<Auteur> auteurs, List<Categorie> categories) {
         this.client = client;
         this.editeurs = editeurs;
         this.auteurs = auteurs;
@@ -45,27 +47,27 @@ public class Preference {
         this.client = client;
     }
 
-    public Collection<Editeur> getEditeurs() {
+    public List<Editeur> getEditeurs() {
 		return editeurs;
 	}
 
-	public void setEditeurs(Collection<Editeur> editeurs) {
+	public void setEditeurs(List<Editeur> editeurs) {
 		this.editeurs = editeurs;
 	}
 
-	public Collection<Auteur> getAuteurs() {
+	public List<Auteur> getAuteurs() {
 		return auteurs;
 	}
 
-	public void setAuteurs(Collection<Auteur> auteurs) {
+	public void setAuteurs(List<Auteur> auteurs) {
 		this.auteurs = auteurs;
 	}
 
-	public Collection<Categorie> getCategories() {
+	public List<Categorie> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Collection<Categorie> categories) {
+	public void setCategories(List<Categorie> categories) {
 		this.categories = categories;
 	}
 

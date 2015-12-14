@@ -37,7 +37,7 @@
     <div class="col-lg-4 col-lg-offset-1 text-center">
         <div class="thumbnail">
             <legend th:text="${ouvrage.titre}"></legend>
-            <img th:src="${ouvrage.image}" style="margin-bottom:10px"/>
+            <img th:src="${ouvrage.getImageAsText()}" style="margin-bottom:10px"/>
         </div>
     </div>
     <div class="col-lg-3">
@@ -65,7 +65,7 @@
     <div class="col-lg-10 col-lg-offset-1">
         <div class="thumbnail">
             <legend class="text-center">Table de matières</legend>
-            <pre th:text="${ouvrage.tableDeMatiere}"></pre>
+            <pre th:text="${ouvrage.getTableDeMatiereAsText()}"></pre>
         </div>
     </div>
     <div class="col-lg-10 col-lg-offset-1">
