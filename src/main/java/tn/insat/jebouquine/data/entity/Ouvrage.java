@@ -209,7 +209,7 @@ public class Ouvrage implements Serializable {
 
     public String getAuteursAsText() {
         String auteursText = "";
-        if (auteurs != null) {
+        if (auteurs != null&& !auteurs.isEmpty()) {
             for (Auteur a : auteurs)
                 auteursText += a.getNom() + ",";
             auteursText = auteursText.substring(0, auteursText.lastIndexOf(","));
@@ -219,7 +219,7 @@ public class Ouvrage implements Serializable {
 
     public String getCategoriesAsText() {
         String categoriesText = "";
-        if (categories != null) {
+        if (categories != null && !categories.isEmpty()) {
             for (Categorie c : categories)
                 categoriesText += c.getTitre() + ",";
             categoriesText = categoriesText.substring(0, categoriesText.lastIndexOf(","));

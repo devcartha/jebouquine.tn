@@ -36,7 +36,7 @@ public class Editeur {
 
 	@Override
 	public String toString() {
-		return "Editeur{" +
+		return "editeur{" +
 				"id=" + id +
 				", nom='" + nom + '\'' +
 				'}';

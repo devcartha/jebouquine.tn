@@ -1,4 +1,4 @@
-package tn.insat.jebouquine.presentation.controller;
+package tn.insat.jebouquine.presentation.controller.administrator;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.collection.internal.PersistentBag;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by Devcartha on 12/11/2015.
  */
 @Controller
-public class OuvrageMAContoller {
+public class OuvrageContoller {
     @Autowired
     IGestionOuvrage gestionOuvrage;
     @Autowired
@@ -107,6 +107,7 @@ public class OuvrageMAContoller {
                         for (Auteur a : (ArrayList<Auteur>) getValue())
                             auteurs += a.getNom() + ",";
                     }
+                    if(auteurs.contains(","))
                     return  auteurs.substring(0, auteurs.lastIndexOf(","));
                 }
                 return  auteurs;
@@ -136,6 +137,7 @@ public class OuvrageMAContoller {
                         for (Categorie c : (ArrayList<Categorie>) getValue())
                             categories += c.getTitre() + ",";
                     }
+                    if(categories.contains(","))
                     return  categories.substring(0, categories.lastIndexOf(","));
                 }
                 return  categories;
@@ -161,7 +163,7 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/formI", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getOuvrageFormForInsertion() {
-        ModelAndView mv = new ModelAndView("ouvrage/form");
+        ModelAndView mv = new ModelAndView("administratorView/ouvrage/form");
         mv.addObject("ouvrage", new Ouvrage());
         return mv;
     }
@@ -169,7 +171,7 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/formU", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getOuvrageFormForUpdate(@RequestParam Long id) {
-        ModelAndView mv = new ModelAndView("ouvrage/form");
+        ModelAndView mv = new ModelAndView("administratorView/ouvrage/form");
         mv.addObject("ouvrage", gestionOuvrage.getOuvrageById(id));
         return mv;
     }
@@ -177,7 +179,7 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/save", method = RequestMethod.POST)
     public ModelAndView addOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("ouvrage/form");
+            return new ModelAndView("administratorView/ouvrage/form");
         } else {
             this.gestionOuvrage.addOuvrage(ouvrage);
             return new ModelAndView("redirect:/ouvrage/list");
@@ -187,7 +189,7 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/update", method = RequestMethod.POST)
     public ModelAndView updateOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("ouvrage/form");
+            return new ModelAndView("administratorView/ouvrage/form");
         } else {
             this.gestionOuvrage.addOuvrage(ouvrage);
             return new ModelAndView("redirect:/ouvrage/list");
@@ -197,7 +199,7 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/list", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getOuvragesList() {
-        ModelAndView mv = new ModelAndView("ouvrage/list");
+        ModelAndView mv = new ModelAndView("administratorView/ouvrage/list");
         mv.addObject("ouvrages", gestionOuvrage.getAll());
         return mv;
     }
@@ -205,12 +207,26 @@ public class OuvrageMAContoller {
     @RequestMapping(value = "/ouvrage/details", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getOuvrageDetails(@RequestParam Long id) {
-        ModelAndView mv = new ModelAndView("ouvrage/detailsForAdmin");
+        ModelAndView mv = new ModelAndView("administratorView/ouvrage/details");
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
         mv.addObject("ouvrage",ouvrage);
         mv.addObject("avis",gestionOuvrage.getAvisClients(ouvrage));
         return mv;
     }
 
+    @RequestMapping(value = "/ouvrage/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView deleteOuvrage(@RequestParam Long id) {
+        gestionOuvrage.deleteOuvrage(id);
+        return new ModelAndView("redirect:/ouvrage/list");
+    }
+
+    @RequestMapping(value = "/ouvrage/search", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView deleteOuvrage(@RequestParam String keyWord) {
+        ModelAndView mv = new ModelAndView("administratorView/ouvrage/list");
+        mv.addObject("ouvrages",gestionOuvrage.getOuvrageByKeyWord(keyWord));
+        return mv;
+    }
 
 }

@@ -79,7 +79,7 @@ public class Auteur {
 
 	@Override
 	public String toString() {
-		return "Auteur{" +
+		return "auteur{" +
 				"id=" + id +
 				", nom='" + nom + '\'' +
 				", nationalite='" + nationalite + '\'' +

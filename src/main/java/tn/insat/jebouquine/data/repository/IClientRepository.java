@@ -18,4 +18,6 @@ public interface IClientRepository extends CrudRepository<Client,Long> {
     public Client findClientByCin(String cin);
     public Client findClientByNumeroPasseport(String cin);
     public ArrayList<Client> findClientByDateInscription(String dateInscription);
+    public ArrayList<Client> findClientByNomContainingOrPrenomContainingOrCinContainingOrNumeroPasseportContainingOrDateInscriptionContainingOrEmailContainingOrAdresseContainingOrLoginContaining
+            (String nom, String prenom, String cin, String numeroPasseport, String dateInscription, String email, String adresse, String login);
 }

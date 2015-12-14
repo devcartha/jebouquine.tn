@@ -9,7 +9,7 @@ public class Avi {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String avi;
+	private String commentaire;
 	@ManyToOne
     @JoinColumn(name = "client_id")
 	private Client client;
@@ -21,7 +21,7 @@ public class Avi {
     }
 
     public Avi(String avi, Client client, Ouvrage ouvrage) {
-        this.avi = avi;
+        this.commentaire = avi;
         this.client = client;
         this.ouvrage = ouvrage;
     }
@@ -34,12 +34,12 @@ public class Avi {
 		this.id = id;
 	}
 
-	public String getAvi() {
-		return avi;
+	public String getCommentaire() {
+		return commentaire;
 	}
 
-	public void setAvi(String avi) {
-		this.avi = avi;
+	public void setCommentaire(String avi) {
+		this.commentaire = avi;
 	}
 
 	public Client getClient() {
@@ -66,7 +66,7 @@ public class Avi {
 		Avi avi1 = (Avi) o;
 
 		if (id != null ? !id.equals(avi1.id) : avi1.id != null) return false;
-		if (avi != null ? !avi.equals(avi1.avi) : avi1.avi != null) return false;
+		if (commentaire != null ? !commentaire.equals(avi1.commentaire) : avi1.commentaire != null) return false;
 		if (client != null ? !client.equals(avi1.client) : avi1.client != null) return false;
 		return !(ouvrage != null ? !ouvrage.equals(avi1.ouvrage) : avi1.ouvrage != null);
 
@@ -75,7 +75,7 @@ public class Avi {
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (avi != null ? avi.hashCode() : 0);
+		result = 31 * result + (commentaire != null ? commentaire.hashCode() : 0);
 		result = 31 * result + (client != null ? client.hashCode() : 0);
 		result = 31 * result + (ouvrage != null ? ouvrage.hashCode() : 0);
 		return result;
@@ -85,7 +85,7 @@ public class Avi {
 	public String toString() {
 		return "Avi{" +
 				"id=" + id +
-				", avi='" + avi + '\'' +
+				", commentaire='" + commentaire + '\'' +
 				", client=" + client +
 				", ouvrage=" + ouvrage +
 				'}';

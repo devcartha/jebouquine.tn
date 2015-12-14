@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+
+
+<div class="container" style="margin-top: 2%">
+    <legend>Authentification</legend>
+
+    <form class="form-horizontal form-narrow" method="post" th:action="@{/client/signIn}" th:object="${client}">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <input type="text" class="form-control" id="login" placeholder="Entrez votre login"
+                           th:field="*{login}"/>
+
+                    <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe"
+                           th:field="*{password}"/>
+
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-9">
+                <button type="submit" class="btn btn-info" th:href="@{/client/signIn}">S'authentifier</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr/>
+<footer class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Copyright © Je bouquine. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

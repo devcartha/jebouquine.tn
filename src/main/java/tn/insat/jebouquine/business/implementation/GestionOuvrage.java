@@ -1,5 +1,6 @@
 package tn.insat.jebouquine.business.implementation;
 
+import org.hibernate.collection.internal.PersistentBag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import tn.insat.jebouquine.data.entity.*;
 import tn.insat.jebouquine.data.repository.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Devcartha on 12/10/2015.
@@ -29,6 +31,15 @@ public class GestionOuvrage implements IGestionOuvrage {
     private IAviRepository aviRepository;
 
     public void addOuvrage(Ouvrage ouvrage) {
+
+       if (ouvrage.getId()!=null&&ouvrage.getImage()==null){
+            Ouvrage o = ouvrageRepository.findOne(ouvrage.getId());
+            ouvrage.setImage(o.getImage());
+        }
+        if(ouvrage.getId()!=null&&ouvrage.getTableDeMatiere()==null){
+            Ouvrage o = ouvrageRepository.findOne(ouvrage.getId());
+            ouvrage.setTableDeMatiere(o.getTableDeMatiere());
+        }
 
         //Reattacher les objets à la session courante
 
@@ -62,5 +73,19 @@ public class GestionOuvrage implements IGestionOuvrage {
 
     public ArrayList<Ouvrage> getAll(){
         return (ArrayList<Ouvrage>) ouvrageRepository.findAll();
+    }
+
+    public ArrayList<Ouvrage> getOuvrageByKeyWord(String keyWord){
+        return ouvrageRepository.findOuvrageByTitreContainingOrDateParutionContainingOrEditeurNomContainingOrCategoriesTitreContainingOrAuteursNomContainingOrAuteursNationaliteContaining(
+                keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+    }
+
+    public void deleteOuvrage(Long id){
+        Ouvrage o = ouvrageRepository.findOne(id);
+        o.setAuteurs(null);
+        o.setCategories(null);
+        o.setEditeur(null);
+        ouvrageRepository.save(o);
+        ouvrageRepository.delete(o);
     }
 }

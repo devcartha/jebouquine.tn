@@ -12,4 +12,6 @@ public interface IGestionOuvrage {
     public ArrayList<Ouvrage> getAll();
     public Ouvrage getOuvrageById(Long id);
     public ArrayList<Avi> getAvisClients(Ouvrage ouvrage);
+    public void deleteOuvrage(Long id);
+    public ArrayList<Ouvrage> getOuvrageByKeyWord(String keyWord);
 }

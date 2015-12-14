@@ -14,4 +14,5 @@ import java.util.Collection;
 @Repository
 public interface IEditeurRepository extends CrudRepository<Editeur,Long> {
     public Editeur findEditeurByNom(String nom);
+    public ArrayList<Editeur> findEditeurByNomContaining(String nom);
 }

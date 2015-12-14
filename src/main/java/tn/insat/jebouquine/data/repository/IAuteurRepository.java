@@ -16,4 +16,5 @@ import java.util.Collection;
 public interface IAuteurRepository extends CrudRepository<Auteur,Long> {
     public Auteur findAuteurByNom(String nom);
     public ArrayList<Auteur> findAuteurByNationalite(String nationalite);
+    public ArrayList<Auteur> findAuteurByNomContainingOrNationaliteContainingOrEmailContaining(String nom, String nationalite, String email);
 }

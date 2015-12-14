@@ -21,5 +21,6 @@ public interface IOuvrageRepository extends CrudRepository<Ouvrage,Long> {
     public ArrayList<Ouvrage> findOuvrageByCategoriesTitre(String titre);
     public ArrayList<Ouvrage> findOuvrageByAuteursNom(String nom);
     public ArrayList<Ouvrage> findOuvrageByAuteursNationalite(String nationalite);
-    public ArrayList<Ouvrage> findOuvrageByDateParutionContainingOrEditeurNomContainingOrCategoriesTitreContainingOrAuteursNomContainingOrAuteursNationaliteContaining(String date,String nomEditeur,String titreCategorie,String nomAuteur,String prenomAuteur,String nationaliteAuteur);
+    public ArrayList<Ouvrage> findOuvrageByTitreContainingOrDateParutionContainingOrEditeurNomContainingOrCategoriesTitreContainingOrAuteursNomContainingOrAuteursNationaliteContaining(
+            String titre, String date,String editeur, String categorie, String auteur,String nationalite);
 }
