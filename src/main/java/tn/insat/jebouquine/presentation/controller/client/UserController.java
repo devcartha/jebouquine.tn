@@ -9,9 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import tn.insat.jebouquine.business.facade.IGestionClient;
 import tn.insat.jebouquine.data.entity.Auteur;
 import tn.insat.jebouquine.data.entity.Client;
+import tn.insat.jebouquine.data.entity.LigneCommande;
+import tn.insat.jebouquine.data.entity.Panier;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -27,7 +30,7 @@ public class UserController {
     @RequestMapping(value = "/client/signInForm", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getClientFormForSignIn() {
-        ModelAndView mv = new ModelAndView("clientView/client/signInForm");
+        ModelAndView mv = new ModelAndView("clientView/authentification/signInForm");
         mv.addObject("client", new Client());
         return mv;
     }
@@ -39,6 +42,7 @@ public class UserController {
             return new ModelAndView("redirect:/client/signInForm");
         else{
             httpSession.setAttribute("client",c);
+            httpSession.setAttribute("panier",new Panier(c,new ArrayList<LigneCommande>()));
             return new ModelAndView("redirect:/catalog/list");
         }
     }
@@ -46,7 +50,7 @@ public class UserController {
     @RequestMapping(value = "/client/formI", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getClientFormForInscribe() {
-        ModelAndView mv = new ModelAndView("clientView/client/inscribeForm");
+        ModelAndView mv = new ModelAndView("clientView/authentification/inscribeForm");
         mv.addObject("client", new Client());
         return mv;
     }
@@ -54,7 +58,7 @@ public class UserController {
     @RequestMapping(value = "/client/formU", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getClientFormForUpdate(@RequestParam Long id) {
-        ModelAndView mv = new ModelAndView("clientView/client/inscribeForm");
+        ModelAndView mv = new ModelAndView("clientView/authentification/inscribeForm");
         mv.addObject("client", gestionClient.getClientById(id));
         return mv;
     }
@@ -62,22 +66,31 @@ public class UserController {
     @RequestMapping(value = "/client/save", method = RequestMethod.POST)
     public ModelAndView addClient(@ModelAttribute @Valid Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("clientView/client/inscribeForm");
+            return new ModelAndView("clientView/authentification/inscribeForm");
         } else {
             client.setDateInscription(new Date());
             this.gestionClient.addClient(client);
-            return new ModelAndView("redirect:/client/signInForm");
+            ModelAndView mv = new ModelAndView("clientView/authentification/signInForm");
+            mv.addObject("client",client);
+            return mv;
         }
     }
 
     @RequestMapping(value = "/client/update", method = RequestMethod.POST)
     public ModelAndView updateClient(@ModelAttribute @Valid Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("clientView/client/inscribeForm");
+            return new ModelAndView("clientView/authentification/inscribeForm");
         } else {
             this.gestionClient.addClient(client);
             return new ModelAndView("redirect:/client/signInForm");
         }
+    }
+
+    @RequestMapping(value = "/client/logout", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getClientFormForUpdate(HttpSession httpSession) {
+        httpSession.invalidate();
+        return new ModelAndView("redirect:/client/signInForm");
     }
 
 }

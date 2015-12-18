@@ -22,7 +22,7 @@ public class Commande {
 	@ManyToOne
     @JoinColumn(name = "client_id")
 	private Client client;
-	@OneToMany(mappedBy = "commande")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<LigneCommande> lignesCommande;
 	@OneToOne(mappedBy = "commande")
 	private Facture facture;
@@ -167,14 +167,16 @@ public class Commande {
     @Override
     public String toString() {
         return "Commande{" +
-                "client=" + client +
-                ", adresseLivraison='" + adresseLivraison + '\'' +
-                ", total=" + total +
-                ", fraisLivraison=" + fraisLivraison +
-                ", modePaiement='" + modePaiement + '\'' +
-                ", dateCommande=" + dateCommande +
+                "id=" + id +
                 ", etat='" + etat + '\'' +
-                ", id=" + id +
+                ", dateCommande='" + dateCommande + '\'' +
+                ", modePaiement='" + modePaiement + '\'' +
+                ", fraisLivraison=" + fraisLivraison +
+                ", total=" + total +
+                ", adresseLivraison='" + adresseLivraison + '\'' +
+                ", client=" + client +
+                ", lignesCommande=" + lignesCommande +
+                ", facture=" + facture +
                 '}';
     }
 }

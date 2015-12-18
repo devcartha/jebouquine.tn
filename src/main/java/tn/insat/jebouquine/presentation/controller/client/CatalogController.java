@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import tn.insat.jebouquine.business.facade.IGestionAvi;
+import tn.insat.jebouquine.business.facade.IGestionCommande;
 import tn.insat.jebouquine.business.facade.IGestionOuvrage;
-import tn.insat.jebouquine.data.entity.Avi;
-import tn.insat.jebouquine.data.entity.Client;
-import tn.insat.jebouquine.data.entity.Ouvrage;
+import tn.insat.jebouquine.data.entity.*;
 import tn.insat.jebouquine.data.repository.IAviRepository;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +23,8 @@ public class CatalogController {
     @Autowired
     IGestionOuvrage gestionOuvrage;
     @Autowired
-    IAviRepository aviRepository;
+    IGestionAvi gestionAvi;
+
 
     @RequestMapping(value = "/catalog/list", method = RequestMethod.GET)
     @ResponseBody
@@ -44,6 +45,18 @@ public class CatalogController {
         return mv;
     }
 
+    @RequestMapping(value = "/catalog/addToCart", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView addOuvrageToCart(@RequestParam Long id, HttpSession httpSession) {
+        Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
+        LigneCommande lc = new LigneCommande();
+        lc.setOuvrage(ouvrage);
+        lc.setPrix(ouvrage.getPrix());
+        if (!((Panier)httpSession.getAttribute("panier")).getLignesCommande().contains(lc))
+        ((Panier)httpSession.getAttribute("panier")).getLignesCommande().add(lc);
+        return new ModelAndView("redirect:/catalog/details?id="+id);
+    }
+
     @RequestMapping(value = "/catalog/search", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView deleteOuvrage(@RequestParam String keyWord) {
@@ -53,17 +66,13 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/catalog/avi", method = RequestMethod.POST)
-    public ModelAndView signIn(@ModelAttribute Avi avi,@RequestParam Long id, HttpSession httpSession) {
+    public ModelAndView addAvi(@ModelAttribute Avi avi,@RequestParam Long id, HttpSession httpSession) {
         ModelAndView mv = new ModelAndView("clientView/ouvrage/details");
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
-        avi.setClient((Client) httpSession.getAttribute("client"));
-        System.out.println((Client)httpSession.getAttribute("client"));
-        avi.setOuvrage(ouvrage);
-        aviRepository.save(avi);
+        gestionAvi.addAvi(avi,ouvrage,(Client) httpSession.getAttribute("client"));
         mv.addObject("ouvrage",ouvrage);
         mv.addObject("avis",gestionOuvrage.getAvisClients(ouvrage));
         return mv;
     }
-
 
 }

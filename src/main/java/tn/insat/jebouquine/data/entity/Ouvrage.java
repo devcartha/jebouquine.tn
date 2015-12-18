@@ -1,15 +1,8 @@
 package tn.insat.jebouquine.data.entity;
 
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -30,6 +23,7 @@ public class Ouvrage implements Serializable {
     private String tableDeMatiere;
     private int quantiteDispo;
     private int quantiteVendus;
+    private double prix;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Categorie> categories;
@@ -40,21 +34,12 @@ public class Ouvrage implements Serializable {
     private Editeur editeur;
 
     public Ouvrage() {
-    }
-
-    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus) {
-        this.titre = titre;
-        this.isbn = isbn;
-        this.dateParution = dateParution;
-        this.image = image;
-        this.tableDeMatiere = tableDeMatiere;
-        this.quantiteDispo = quantiteDispo;
-        this.quantiteVendus = quantiteVendus;
         this.categories = new ArrayList<>();
         this.auteurs = new ArrayList<>();
+        this.editeur = new Editeur();
     }
 
-    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, List<Categorie> categories, List<Auteur> auteurs, Editeur editeur) {
+    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, double prix) {
         this.titre = titre;
         this.isbn = isbn;
         this.dateParution = dateParution;
@@ -62,6 +47,21 @@ public class Ouvrage implements Serializable {
         this.tableDeMatiere = tableDeMatiere;
         this.quantiteDispo = quantiteDispo;
         this.quantiteVendus = quantiteVendus;
+        this.prix = prix;
+        this.categories = new ArrayList<>();
+        this.auteurs = new ArrayList<>();
+        this.editeur = new Editeur();
+    }
+
+    public Ouvrage(String titre, String isbn, String dateParution, String image, String tableDeMatiere, int quantiteDispo, int quantiteVendus, double prix, List<Categorie> categories, List<Auteur> auteurs, Editeur editeur) {
+        this.titre = titre;
+        this.isbn = isbn;
+        this.dateParution = dateParution;
+        this.image = image;
+        this.tableDeMatiere = tableDeMatiere;
+        this.quantiteDispo = quantiteDispo;
+        this.quantiteVendus = quantiteVendus;
+        this.prix = prix;
         this.categories = categories;
         this.auteurs = auteurs;
         this.editeur = editeur;
@@ -131,6 +131,14 @@ public class Ouvrage implements Serializable {
         this.quantiteVendus = quantiteVendus;
     }
 
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
     public List<Categorie> getCategories() {
         return categories;
     }
@@ -157,23 +165,8 @@ public class Ouvrage implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Ouvrage ouvrage = (Ouvrage) o;
-
-        if (quantiteDispo != ouvrage.quantiteDispo) return false;
-        if (quantiteVendus != ouvrage.quantiteVendus) return false;
-        if (id != null ? !id.equals(ouvrage.id) : ouvrage.id != null) return false;
-        if (titre != null ? !titre.equals(ouvrage.titre) : ouvrage.titre != null) return false;
-        if (isbn != null ? !isbn.equals(ouvrage.isbn) : ouvrage.isbn != null) return false;
-        if (dateParution != null ? !dateParution.equals(ouvrage.dateParution) : ouvrage.dateParution != null)
-            return false;
-        if (image != null ? !image.equals(ouvrage.image) : ouvrage.image != null) return false;
-        if (categories != null ? !categories.equals(ouvrage.categories) : ouvrage.categories != null) return false;
-        if (auteurs != null ? !auteurs.equals(ouvrage.auteurs) : ouvrage.auteurs != null) return false;
-        return !(editeur != null ? !editeur.equals(ouvrage.editeur) : ouvrage.editeur != null);
-
+        Ouvrage that = (Ouvrage) o;
+        return (this.getIsbn().equals(that.getIsbn()));
     }
 
     @Override
@@ -209,7 +202,7 @@ public class Ouvrage implements Serializable {
 
     public String getAuteursAsText() {
         String auteursText = "";
-        if (auteurs != null&& !auteurs.isEmpty()) {
+        if (auteurs != null && !auteurs.isEmpty()) {
             for (Auteur a : auteurs)
                 auteursText += a.getNom() + ",";
             auteursText = auteursText.substring(0, auteursText.lastIndexOf(","));
@@ -235,14 +228,14 @@ public class Ouvrage implements Serializable {
     }
 
     public String getImageAsText() {
-        if (image!=null&&image.contains("|"))
-            return image.substring(image.indexOf("|")+1);
+        if (image != null && image.contains("|"))
+            return image.substring(image.indexOf("|") + 1);
         return image;
     }
 
     public String getTableDeMatiereAsText() {
-        if (tableDeMatiere!=null&&tableDeMatiere.contains("|"))
-            return tableDeMatiere.substring(tableDeMatiere.indexOf("|")+1);
+        if (tableDeMatiere != null && tableDeMatiere.contains("|"))
+            return tableDeMatiere.substring(tableDeMatiere.indexOf("|") + 1);
         return tableDeMatiere;
     }
 }

@@ -60,7 +60,6 @@ public class OuvrageContoller {
                 if ( getValue() != null){
                     if (getValue().toString().contains("|")){
                         image = getValue().toString().substring(0,getValue().toString().indexOf("|"));
-                        System.out.println(image);
                     }
                 }
                 return image;
@@ -87,7 +86,7 @@ public class OuvrageContoller {
             @Override
             public void setAsText(String text) {
                 ArrayList<Auteur> listAuteurs = new ArrayList<>();
-                String[] auteurs = text.split(",");
+                String[] auteurs = text.split(", ");
                 for (String auteur : auteurs) {
                     Auteur a = new Auteur();
                     a.setNom(auteur);
@@ -117,7 +116,7 @@ public class OuvrageContoller {
             @Override
             public void setAsText(String text) {
                 ArrayList<Categorie> listCategories = new ArrayList<>();
-                String[] categories = text.split(",");
+                String[] categories = text.split(", ");
                 for (String categorie : categories) {
                     Categorie c = new Categorie();
                     c.setTitre(categorie);
@@ -153,7 +152,7 @@ public class OuvrageContoller {
             @Override
             public String getAsText() {
                 String editeur = "";
-                if (((Editeur) getValue()) != null)
+                if ((((Editeur) getValue()).getNom()) != null)
                     editeur = ((Editeur) getValue()).getNom();
                 return editeur;
             }

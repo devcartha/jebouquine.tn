@@ -10,29 +10,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-default navbar-inverse">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-            <a class="navbar-brand" href="#">Je bouquine</a></div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="#">Livre</a></li>
-                <li><a href="#">Auteur</a></li>
-                <li><a href="#">Editeur</a></li>
-                <li><a href="#">Theme</a></li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
-
+<div th:include="administratorView/fragments::navigation"></div>
 
 <div class="container" style="margin-top: 2%">
     <legend>Ajouter un livre</legend>
@@ -41,8 +19,8 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-1">
 
-                <input type="hidden"  class="form-control" name="id" id="id"
-                           th:field="*{id}"/>
+                <input type="hidden" class="form-control" name="id" id="id"
+                       th:field="*{id}"/>
 
                 <div class="form-group">
                     <label for="image">Photo</label>
@@ -80,6 +58,14 @@
                            th:field="*{quantiteDispo}"/>
 
                     <p th:if="${#fields.hasErrors('quantiteDispo')}" th:errors="*{quantiteDispo}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantite">Prix unitaire</label>
+                    <input type="text" class="form-control" id="prix" placeholder="Entrez le prix unitaire"
+                           th:field="*{prix}"/>
+
+                    <p th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}"></p>
                 </div>
             </div>
             <div class="col-md-5 col-md-offset-1">
@@ -127,15 +113,7 @@
 </div>
 
 <hr/>
-<footer class="text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <p>Copyright © Je bouquine. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-</footer>
+<div th:include="administratorView/fragments::footer"></div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>

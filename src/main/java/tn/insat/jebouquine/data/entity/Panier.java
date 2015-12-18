@@ -11,8 +11,16 @@ public class Panier {
 	private double total;
 	private Client client;
 	private List<LigneCommande> lignesCommande;
-	
-	public Long getId() {
+
+    public Panier() {
+    }
+
+    public Panier(Client client, List<LigneCommande> lignesCommande) {
+        this.client = client;
+        this.lignesCommande = lignesCommande;
+    }
+
+    public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {

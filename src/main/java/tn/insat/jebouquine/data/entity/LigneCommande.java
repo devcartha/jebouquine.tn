@@ -15,6 +15,7 @@ public class LigneCommande {
     @JoinColumn(name = "ouvrage_id")
 	private Ouvrage ouvrage;
     @ManyToOne
+    @JoinColumn(name = "commande_id")
     private Commande commande;
 
     public LigneCommande() {
@@ -69,17 +70,8 @@ public class LigneCommande {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
         LigneCommande that = (LigneCommande) o;
-
-        if (Double.compare(that.prix, prix) != 0) return false;
-        if (quantite != that.quantite) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (ouvrage != null ? !ouvrage.equals(that.ouvrage) : that.ouvrage != null) return false;
-        return !(commande != null ? !commande.equals(that.commande) : that.commande != null);
-
+        return  this.getOuvrage().equals(that.getOuvrage());
     }
 
     @Override

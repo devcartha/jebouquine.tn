@@ -18,4 +18,6 @@ public interface ICommandeRepository extends CrudRepository<Commande,Long> {
     public ArrayList<Commande> findCommandeByEtat(String etat);
     public ArrayList<Commande> findCommandeByDateCommande(String dateCommande);
     public ArrayList<Commande> findCommandeByLignesCommandeOuvrage(Ouvrage o);
+    public ArrayList<Commande> findCommandeByClientNomContainingOrClientPrenomContainingOrEtatContainingOrDateCommandeOrLignesCommandeOuvrageTitreContainingOrAdresseLivraisonContainingOrModePaiementContaining
+            (String nom, String prenom, String etat, String date, String titre, String adresse, String modePaiement);
 }

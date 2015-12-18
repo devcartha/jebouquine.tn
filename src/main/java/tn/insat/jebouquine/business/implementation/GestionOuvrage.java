@@ -55,6 +55,7 @@ public class GestionOuvrage implements IGestionOuvrage {
             auteurs.add(a);
         }
 
+
         Editeur e = this.editeurRepository.findEditeurByNom(ouvrage.getEditeur().getNom());
 
         ouvrage.setEditeur(e);
