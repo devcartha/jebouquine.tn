@@ -38,9 +38,12 @@ public class UserController {
     @RequestMapping(value = "/client/signIn", method = RequestMethod.POST)
     public ModelAndView signIn(@ModelAttribute Client client, HttpSession httpSession) {
         Client c=gestionClient.getClientByLoginPassword(client.getLogin(),client.getPassword());
-        if(c==null)
-            return new ModelAndView("redirect:/client/signInForm");
-        else{
+        if(c==null){
+            ModelAndView mv =  new ModelAndView("clientView/authentification/signInForm");
+            mv.addObject("errors",true);
+            mv.addObject("erreurMsg","Login ou password incorrect");
+            return mv;
+        }else{
             httpSession.setAttribute("client",c);
             httpSession.setAttribute("panier",new Panier(c,new ArrayList<LigneCommande>()));
             return new ModelAndView("redirect:/catalog/list");
@@ -57,7 +60,10 @@ public class UserController {
 
     @RequestMapping(value = "/client/formU", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getClientFormForUpdate(@RequestParam Long id) {
+    public ModelAndView getClientFormForUpdate(@RequestParam Long id,HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         ModelAndView mv = new ModelAndView("clientView/authentification/inscribeForm");
         mv.addObject("client", gestionClient.getClientById(id));
         return mv;
@@ -89,6 +95,9 @@ public class UserController {
     @RequestMapping(value = "/client/logout", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getClientFormForUpdate(HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         httpSession.invalidate();
         return new ModelAndView("redirect:/client/signInForm");
     }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="../../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+<div th:include="clientView/fragments::navigation"></div>
+<div class="container" style="margin-top: 2%">
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-lg-10">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Ouvrage</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ligneCommande : ${commande.lignesCommande}">
+                        <td th:text="${ligneCommande.ouvrage.titre}"></td>
+                        <td th:text="${ligneCommande.quantite}"></td>
+                        <td th:text="${ligneCommande.prix}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                Votre commande est passée avec succès le(s) ouvrage(s) vous seront livrés dans 15 jours, le paiement s'effectuera sur le champs.
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<div th:include="clientView/fragments::footer"></div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="../../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+
+<div th:include="surferView/fragments::navigation"></div>
+
+<div class="row">
+    <div class="col-lg-3" style="margin-left: 2%">
+        <div class="form-group">
+            <input type="text" id="search"/>
+            <button style="margin: 1%" type="submit" class="btn btn-toolbar" th:onclick="'javascript:getMotCle();'">
+                Rechercher
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-sm-4 text-center" th:each="ouvrage : ${ouvrages}">
+                <div class="thumbnail"><img th:src="${ouvrage.getImageAsText()}" style="margin-bottom:10px"/>
+                    <p th:text="${ouvrage.titre}"></p>
+                    <a th:href="@{/catalogue/details(id=${ouvrage.id})}">
+                        <button class="btn btn-info" style="margin: 1%">Details</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+
+<hr/>
+<div th:include="surferView/fragments::footer"></div>
+
+<script type="text/javascript">
+    function getMotCle() {
+        motcle = document.getElementById("search").value;
+        document.location = "http://localhost:8080/catalogue/search?keyWord=" + motcle;
+    }
+</script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>
+<!-- Include all compiledplugins (below), or include individual files as needed -->
+<script src="../../../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

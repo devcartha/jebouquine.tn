@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="../../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+<div th:include="surferView/fragments::navigation"></div>
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-1 text-center">
+        <div class="thumbnail">
+            <legend th:text="${ouvrage.titre}"></legend>
+            <img th:src="${ouvrage.getImageAsText()}" style="margin-bottom:10px"/>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <label for="isbn">ISBN : </label>
+            <pre id="isbn" th:text="${ouvrage.isbn}"></pre>
+            <label for="quantiteDisponible">Quanitité disponible : </label>
+            <pre id="quantiteDisponible" th:text="${ouvrage.quantiteDispo}"> </pre>
+            <label for="quantiteVendu">Quantité vendu : </label>
+            <pre id="quantiteVendu" th:text="${ouvrage.quantiteVendus}"> </pre>
+            <label for="prixUnitaire">Prix unitaire : </label>
+            <pre id="prixUnitaire" th:text="${ouvrage.prix}"> </pre>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <label for="editeur">Editeur : </label>
+            <pre id="editeur" th:text="${ouvrage.getEditeurAsText()}"></pre>
+            <label for="auteur">Auteur(s) : </label>
+            <pre id="auteur" th:text="${ouvrage.getAuteursAsText()}"> </pre>
+            <label for="theme">Theme(s) : </label>
+            <pre id="theme" th:text="${ouvrage.getCategoriesAsText()}"> </pre>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="thumbnail">
+            <legend class="text-center">Table de matières</legend>
+            <pre th:text="${ouvrage.getTableDeMatiereAsText()}"></pre>
+        </div>
+    </div>
+    <div class="col-lg-10 col-lg-offset-1">
+        <legend class=" text-center">Avis des Utilisateurs</legend>
+        <div class="col-sm-3" th:each="avi : ${avis}">
+            <div class="thumbnail">
+                <label for="avi" th:text="${avi.client.nom} +' '+ ${avi.client.prenom}"></label>
+                <pre id="avi" th:text="${avi.commentaire}"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<hr/>
+<div th:include="surferView/fragments::footer"></div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

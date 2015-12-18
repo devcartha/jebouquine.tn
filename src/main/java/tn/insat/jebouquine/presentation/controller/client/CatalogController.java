@@ -28,7 +28,7 @@ public class CatalogController {
 
     @RequestMapping(value = "/catalog/list", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvragesList() {
+    public ModelAndView getOuvragesList(HttpSession httpSession) {
         ModelAndView mv = new ModelAndView("clientView/ouvrage/list");
         mv.addObject("ouvrages", gestionOuvrage.getAll());
         return mv;
@@ -36,7 +36,10 @@ public class CatalogController {
 
     @RequestMapping(value = "/catalog/details", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvrageDetails(@RequestParam Long id) {
+    public ModelAndView getOuvrageDetails(@RequestParam Long id,HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         ModelAndView mv = new ModelAndView("clientView/ouvrage/details");
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
         mv.addObject("ouvrage",ouvrage);
@@ -48,6 +51,9 @@ public class CatalogController {
     @RequestMapping(value = "/catalog/addToCart", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView addOuvrageToCart(@RequestParam Long id, HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
         LigneCommande lc = new LigneCommande();
         lc.setOuvrage(ouvrage);
@@ -59,7 +65,10 @@ public class CatalogController {
 
     @RequestMapping(value = "/catalog/search", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView deleteOuvrage(@RequestParam String keyWord) {
+    public ModelAndView deleteOuvrage(@RequestParam String keyWord,HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         ModelAndView mv = new ModelAndView("clientView/ouvrage/list");
         mv.addObject("ouvrages",gestionOuvrage.getOuvrageByKeyWord(keyWord));
         return mv;
@@ -67,6 +76,9 @@ public class CatalogController {
 
     @RequestMapping(value = "/catalog/avi", method = RequestMethod.POST)
     public ModelAndView addAvi(@ModelAttribute Avi avi,@RequestParam Long id, HttpSession httpSession) {
+        if(httpSession.getAttribute("client")==null){
+            return new ModelAndView("redirect:/client/signInForm");
+        }
         ModelAndView mv = new ModelAndView("clientView/ouvrage/details");
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
         gestionAvi.addAvi(avi,ouvrage,(Client) httpSession.getAttribute("client"));

@@ -3,6 +3,7 @@ package tn.insat.jebouquine.presentation.controller.administrator;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.collection.internal.PersistentBag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,6 +16,7 @@ import tn.insat.jebouquine.data.entity.Editeur;
 import tn.insat.jebouquine.data.entity.Ouvrage;
 import tn.insat.jebouquine.presentation.validator.OuvrageValidator;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
 import java.io.*;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
  * Created by Devcartha on 12/11/2015.
  */
 @Controller
+@Scope(value = "session")
 public class OuvrageContoller {
     @Autowired
     IGestionOuvrage gestionOuvrage;
@@ -161,7 +164,10 @@ public class OuvrageContoller {
 
     @RequestMapping(value = "/ouvrage/formI", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvrageFormForInsertion() {
+    public ModelAndView getOuvrageFormForInsertion(HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         ModelAndView mv = new ModelAndView("administratorView/ouvrage/form");
         mv.addObject("ouvrage", new Ouvrage());
         return mv;
@@ -169,14 +175,20 @@ public class OuvrageContoller {
 
     @RequestMapping(value = "/ouvrage/formU", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvrageFormForUpdate(@RequestParam Long id) {
+    public ModelAndView getOuvrageFormForUpdate(@RequestParam Long id,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         ModelAndView mv = new ModelAndView("administratorView/ouvrage/form");
         mv.addObject("ouvrage", gestionOuvrage.getOuvrageById(id));
         return mv;
     }
 
     @RequestMapping(value = "/ouvrage/save", method = RequestMethod.POST)
-    public ModelAndView addOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult) {
+    public ModelAndView addOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         if (bindingResult.hasErrors()) {
             return new ModelAndView("administratorView/ouvrage/form");
         } else {
@@ -186,7 +198,10 @@ public class OuvrageContoller {
     }
 
     @RequestMapping(value = "/ouvrage/update", method = RequestMethod.POST)
-    public ModelAndView updateOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult) {
+    public ModelAndView updateOuvrage(@ModelAttribute @Valid Ouvrage ouvrage, BindingResult bindingResult,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         if (bindingResult.hasErrors()) {
             return new ModelAndView("administratorView/ouvrage/form");
         } else {
@@ -197,7 +212,10 @@ public class OuvrageContoller {
 
     @RequestMapping(value = "/ouvrage/list", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvragesList() {
+    public ModelAndView getOuvragesList(HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         ModelAndView mv = new ModelAndView("administratorView/ouvrage/list");
         mv.addObject("ouvrages", gestionOuvrage.getAll());
         return mv;
@@ -205,7 +223,10 @@ public class OuvrageContoller {
 
     @RequestMapping(value = "/ouvrage/details", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getOuvrageDetails(@RequestParam Long id) {
+    public ModelAndView getOuvrageDetails(@RequestParam Long id,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         ModelAndView mv = new ModelAndView("administratorView/ouvrage/details");
         Ouvrage ouvrage = gestionOuvrage.getOuvrageById(id);
         mv.addObject("ouvrage",ouvrage);
@@ -215,14 +236,20 @@ public class OuvrageContoller {
 
     @RequestMapping(value = "/ouvrage/delete", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView deleteOuvrage(@RequestParam Long id) {
+    public ModelAndView deleteOuvrage(@RequestParam Long id,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         gestionOuvrage.deleteOuvrage(id);
         return new ModelAndView("redirect:/ouvrage/list");
     }
 
     @RequestMapping(value = "/ouvrage/search", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView deleteOuvrage(@RequestParam String keyWord) {
+    public ModelAndView deleteOuvrage(@RequestParam String keyWord,HttpSession httpSession) {
+        if(httpSession.getAttribute("admin")==null){
+            return new ModelAndView("redirect:/admin/loginForm");
+        }
         ModelAndView mv = new ModelAndView("administratorView/ouvrage/list");
         mv.addObject("ouvrages",gestionOuvrage.getOuvrageByKeyWord(keyWord));
         return mv;

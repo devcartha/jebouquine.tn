@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap - Prebuilt Layout</title>
+    <!-- Bootstrap -->
+    <link href="../../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+
+<div th:include="administratorView/fragments::navigation"></div>
+<div class="row">
+    <div class="col-lg-3" style="margin-left: 2%">
+        <div class="form-group">
+            <input type="text" id="search"/>
+            <button style="margin: 1%" type="submit" class="btn btn-toolbar" th:onclick="'javascript:getMotCle();'">
+                Rechercher
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom Client</th>
+                    <th>Etat </th>
+                    <th>Date </th>
+                    <th>Mode de paiement</th>
+                    <th>Frais de livraision</th>
+                    <th>Adress de livraision</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody th:each="commande : ${commandes}">
+                <tr>
+                    <th scope="row" th:text="${commande.id}"></th>
+                    <td th:text="${commande.client.nom} +' ' + ${commande.client.prenom} "></td>
+                    <td th:text="${commande.etat}"></td>
+                    <td th:text="${commande.dateCommande}"></td>
+                    <td th:text="${commande.modePaiement}"></td>
+                    <td th:text="${commande.fraisLivraison}"></td>
+                    <td th:text="${commande.adresseLivraison}"></td>
+                    <td th:text="${commande.total}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<div th:include="administratorView/fragments::footer"></div>
+
+<script type="text/javascript">
+    function getMotCle() {
+        motcle = document.getElementById("search").value;
+        document.location = "http://localhost:8080/commande/search?keyWord=" + motcle;
+    }
+</script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../static/js/jquery-1.11.2.min.js" th:href="@{/js/jquery-1.11.2.min.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>
